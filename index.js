@@ -16,9 +16,10 @@ const commentRoutes = require('./routes/comments')
 const campgroundRoutes = require('./routes/campgrounds')
 const authRoutes = require('./routes/auth')
 
+//console.log(process.env.DATABASEURL)
 
 // seedDB() //
-mongoose.connect('mongodb+srv://bertuccis:polloverde@cluster0.p5ec4.mongodb.net/<dbname>?retryWrites=true&w=majority', { 
+mongoose.connect(process.env.DATABASEURL, { 
     useNewUrlParser: true, 
     useUnifiedTopology: true, 
     useFindAndModify: false
