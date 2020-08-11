@@ -55,7 +55,7 @@ app.use(flash())
 // ]
 
 //Pasport config
-app.use(require('express-session')({
+app.use(require('cookie-session')({
     secret: 'kuloz',
     resave: false,
     saveUninitialized: false
