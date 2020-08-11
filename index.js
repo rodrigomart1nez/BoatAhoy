@@ -18,7 +18,15 @@ const authRoutes = require('./routes/auth')
 
 
 // seedDB() //
-mongoose.connect('mongodb://localhost:27017/yelp_camp_v11', { useNewUrlParser: true, useUnifiedTopology: true, useFindAndModify: false })
+mongoose.connect('mongodb+srv://bertuccis:polloverde@cluster0.p5ec4.mongodb.net/<dbname>?retryWrites=true&w=majority', { 
+    useNewUrlParser: true, 
+    useUnifiedTopology: true, 
+    useFindAndModify: false
+ }).then(() => {
+     console.log('connected to de DB')
+ }).catch(err => {
+     console.log(`ERROR: ${err.message}`)
+ })
 app.use(bodyParser.urlencoded({extended: true}))
 app.use(express.static(__dirname+'/public'))
 app.use(methodOverride('_method'))
@@ -71,7 +79,7 @@ app.use(authRoutes)
 app.use('/campgrounds', campgroundRoutes)
 app.use('/campgrounds/:id/comments', commentRoutes)
 
-
-app.listen(3000, () => {
+const port = process.env.PORT || 3000
+app.listen(port, () => {
     console.log('YelpCamp server started...')
 })
