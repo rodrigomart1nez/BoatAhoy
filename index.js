@@ -10,6 +10,8 @@ const    Campground = require('./models/campground')
 const User  = require('./models/user')
 const    seedDB     = require('./seeds')
 const  Comment   = require('./models/comment')
+const session = require("express-session")
+const MongoStore = require("connect-mongo")(session)
 
 //requiring routes
 const commentRoutes = require('./routes/comments')
@@ -19,7 +21,9 @@ const authRoutes = require('./routes/auth')
 //console.log(process.env.DATABASEURL)
 
 // seedDB() //
-mongoose.connect(process.env.DATABASEURL, { 
+const url = process.env.DATABASEURL || 'mongodb://localhost:27017/yelp_camp_v12D'
+
+mongoose.connect(url, { 
     useNewUrlParser: true, 
     useUnifiedTopology: true, 
     useFindAndModify: false
@@ -56,10 +60,12 @@ app.use(flash())
 // ]
 
 //Pasport config
-app.use(require('cookie-session')({
+app.use(session({
     secret: 'kuloz',
     resave: false,
-    saveUninitialized: false
+    saveUninitialized: false,
+    store: new MongoStore({ mongooseConnection: mongoose.connection }),
+    cookie: { maxAge: 180 * 60 * 1000 } // 180 minutes session expiration
 }))
 app.use(passport.initialize())
 app.use(passport.session())
