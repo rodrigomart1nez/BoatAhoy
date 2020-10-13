@@ -1,4 +1,4 @@
-const Campground = require('../models/campground')
+const Boat = require('../models/boat')
 const Comment = require('../models/comment')
 
 //all the middleware goes here
@@ -32,19 +32,19 @@ middlewareObj.checkCommentOwnership = (req, res, next) => {
         res.redirect('/login')
     }
 }
-middlewareObj.checkCampgroundOwnership = (req, res, next) => {
+middlewareObj.checkBoatOwnership = (req, res, next) => {
     //is user logged in
     if (req.isAuthenticated()) {
-        Campground.findById(req.params.id, (err, foundCamp) => {
+        Boat.findById(req.params.id, (err, foundBoat) => {
             if (err) {
-                req.flash('error', 'Campground not found')
+                req.flash('error', 'Boat not found')
                 console.log(err)
             } else {
                 //is user the owner
-                if (foundCamp.author.id.equals(req.user._id)) {
+                if (foundBoat.author.id.equals(req.user._id)) {
                     next()
                 } else {
-                    req.flash('error', 'You dont own this campground post')
+                    req.flash('error', 'You dont own this boat post')
                     res.redirect('back')
                 }
             }

@@ -4,24 +4,24 @@
 <div class="container">
     <header class="jumbotron">
         <div class="container">
-            <h1>Welcome to YelpCamp</h1>
-            <p>View our campgrounds worldwide</p>
+            <h1>Welcome to  <i class="fab fa-watchman-monitoring"></i>BoatAhoy</h1>
+            <p>Rent a boat today!</p>
             <p>
-                <a class="btn btn-primary btn-lg" href="/campgrounds/new"> Add new campground </a>
+                <a class="btn btn-primary btn-lg" href="/boats/new"> Add new boat </a>
             </p>
         </div>
     </header>
     
     <div class="row text-center" style="display: flex; flex-wrap: wrap;">
-        <% campgrounds.forEach((camp) => { %>
+        <% boats.forEach((boat) => { %>
             <div class="col-md-3 col-sm-6">
                 <div class="thumbnail">
-                    <img src="<%= camp.image %>">
+                    <img src="<%= boat.image %>">
                     <div class="caption">
-                        <h4> <%= camp.name %> </h4>
+                        <h4> <%= boat.name %> </h4>
                     </div>
                     <p>
-                        <a href="/campgrounds/<%= camp._id %>" class="btn btn-primary">More Info</a>
+                        <a href="/boats/<%= boat._id %>" class="btn btn-primary">More Info</a>
                     </p>
                 </div>
             </div>

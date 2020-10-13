@@ -1,6 +1,6 @@
 const express = require('express')
 const router = express.Router({mergeParams: true})
-const Campground = require('../models/campground')
+const Boat = require('../models/boat')
 const Comment = require('../models/comment')
 const middleware = require('../middleware')
 
@@ -13,22 +13,22 @@ const middleware = require('../middleware')
 
 //comments new
 router.get('/new', middleware.isLoggedIn, (req, res) => {
-    Campground.findById(req.params.id, (err, campground) => {
+    Boat.findById(req.params.id, (err, boat) => {
         if (err) {
             console.log(err)
         } else {
-            res.render('comments/new.ejs', {campground: campground})
+            res.render('comments/new.ejs', {boat: boat})
         }
     })
 })
 
 //comments create
 router.post('/', middleware.isLoggedIn, (req, res) => {
-    //lookup campground using id
-    Campground.findById(req.params.id, (err, campground) => {
+    //lookup boat using id
+    Boat.findById(req.params.id, (err, boat) => {
         if (err) {
             console.log(err)
-            res.redirect('/campgrounds')
+            res.redirect('/boats')
         } else {
             //create new comment
             Comment.create(req.body.comment, (err, comment) => {
@@ -40,12 +40,12 @@ router.post('/', middleware.isLoggedIn, (req, res) => {
                     comment.author.id = req.user._id
                     comment.author.username = req.user.username
                     comment.save()
-                    //connect new comment to campground
-                    campground.comments.push(comment)
-                    campground.save()
+                    //connect new comment to boat
+                    boat.comments.push(comment)
+                    boat.save()
                     req.flash('success', 'Succesfully added comment')
                     //redirect
-                    res.redirect(`/campgrounds/${campground._id}`)
+                    res.redirect(`/boats/${boat._id}`)
                 }
             })
         }
@@ -58,7 +58,7 @@ router.get('/:comment_id/edit', middleware.checkCommentOwnership, (req, res) => 
         if (err) {
             res.redirect('back')
         } else {
-            res.render('comments/edit.ejs', {campground_id: req.params.id, comment: foundComment})
+            res.render('comments/edit.ejs', {boat_id: req.params.id, comment: foundComment})
         }
     })
 })
@@ -69,7 +69,7 @@ router.put('/:comment_id', middleware.checkCommentOwnership, (req, res) => {
         if (err) {
             res.redirect('back')
         } else {
-            res.redirect(`/campgrounds/${req.params.id}`)
+            res.redirect(`/boats/${req.params.id}`)
         }
     })
 })
@@ -81,7 +81,7 @@ router.delete('/:comment_id', middleware.checkCommentOwnership, (req, res) => {
             res.redirect('back')
         } else {
             req.flash('info', 'Comment deleted')
-            res.redirect(`/campgrounds/${req.params.id}`)
+            res.redirect(`/boats/${req.params.id}`)
         }
     })
 })
