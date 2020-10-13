@@ -28,11 +28,11 @@
                     <% } %>
                 </div>
             </div>
+            <div class="text-right">
+                <a class="btn btn-success" href="/boats/<%= boat._id %>/comments/new">Add New Comment</a>
+            </div>
+            <br/>
             <div class="well">
-                <div class="text-right">
-                    <a class="btn btn-success" href="/boats/<%= boat._id %>/comments/new">Add New Comment</a>
-                </div>
-                <hr>
                 <% boat.comments.forEach((comment) => { %>
                     <div class="row">
                         <div class="col-md-12">
