@@ -42,8 +42,8 @@ router.get('/login', (req, res) => {
 //handle login logic
 router.post('/login', passport.authenticate('local', 
     {
-        successRedirect: '/boats', 
-        failureRedirect: '/boats/5f853e49860609001750dbbb/comments/new',
+        successRedirect: '/boats/5f853e49860609001750dbbb/comments/new', 
+        failureRedirect: '/login',
         failureFlash: true
     }), (req, res) => {
 
